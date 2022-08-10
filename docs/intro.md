@@ -159,7 +159,7 @@ Labeling is supported in `electron/main`, `electron/renderer`, and `browser` cli
 
 ## Uploading Source Maps
 
-`@palette.dev/webpack-plugin` is a webpack plugin that uploads source maps to Palette. Only webpack is supported at the moment.
+`@palette.dev/webpack-plugin` is a webpack plugin that uploads source maps to Palette. Webpack is the only bundler supported at the moment.
 
 ### Installation
 
@@ -169,11 +169,14 @@ npm install @palette.dev/webpack-plugin --save-dev
 
 ### Usage
 
+1. Find your **asset key** at `https://palette.dev/[your-username]/[your-project]/settings`.
+2. Add your **asset key** to your webpack config.
+
 ```ts title="webpack.config.js"
 import PalettePlugin from "@palette.dev/webpack-plugin";
 
 export default {
   // ...
-  plugins: [new PalettePlugin({ key: "YOUR_API_KEY" })],
+  plugins: [new PalettePlugin({ key: "YOUR_ASSET_KEY" })],
 };
 ```
