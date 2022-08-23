@@ -3,7 +3,7 @@ const sidebars = {
   sidebar: [
     "intro",
     {
-      Plugins: ["events", "cpu", "vitals"],
+      Plugins: ["events", "vitals"],
     },
     "patterns",
     "tag",

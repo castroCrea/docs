@@ -14,7 +14,7 @@ title: CPU
 
 The CPU plugin collects CPU samples from Electron's renderer and main processes.
 
-```ts {6} title="main.js (main process)"
+```ts {6} title="main.js (main process entrypoint)"
 import { init, cpu } from "@palette.dev/electron/main";
 
 init({
@@ -26,7 +26,7 @@ init({
 });
 ```
 
-```ts {6} title="renderer.js (renderer process)"
+```ts {6} title="renderer.js (renderer process entrypoint)"
 import { init, cpu } from "@palette.dev/electron/renderer";
 
 init({
@@ -42,7 +42,7 @@ init({
 
 CPU samples are collected in intervals. The default sample rate is `1000 ms`.
 
-```ts {7} title="main.js (main process)"
+```ts {7} title="main.js (main process entrypoint)"
 import { init, cpu } from "@palette.dev/electron/main";
 
 init({
@@ -59,7 +59,7 @@ A smaller sampling rate provides more accurate reporting while a greater one wil
 
 ### Starting and Stopping Sampling
 
-```ts {4,6} title="main.js (main process)"
+```ts {4,6} title="main.js (main process entrypoint)"
 import { cpu } from "@palette.dev/electron/main";
 
 if (userIsIdle) {

@@ -35,35 +35,19 @@ import TabItem from '@theme/TabItem';
 
 #### Main Process
 
-```ts title="main.js (main process)"
+```ts title="main.js"
 import { init, cpu, events } from "@palette.dev/electron/main";
 
 init({
   key: "your-api-key",
-  plugins: [
-    // Collect CPU usage
-    cpu(),
-    // BrowserWindow events
-    events(),
-    // performance marks and entries
-    measure(),
-  ],
+  // Collect CPU, click, and performance events
+  plugins: [cpu(), events(), measure()],
 });
-```
-
-#### Preload Script
-
-If you have a preload script you need to call `init` from `@palette.dev/electron/preload`. Skip this if you don't have a preload script.
-
-```ts title="preload.js (preload process)"
-import { init } from "@palette.dev/electron/preload";
-
-init();
 ```
 
 #### Renderer Process
 
-```ts title="renderer.js (renderer process)"
+```ts title="renderer.js"
 import {
   init,
   cpu,
@@ -75,19 +59,19 @@ import {
 
 init({
   key: "your-api-key",
-  plugins: [
-    // Collect CPU usage
-    cpu(),
-    // click events
-    events(),
-    // web core vitals
-    vitals(),
-    // network events
-    network(),
-    // performance marks and entries
-    measure(),
-  ],
+  // Collect CPU, click, web vitals, network, and performance events
+  plugins: [cpu(), events(), vitals(), network(), measure()],
 });
+```
+
+#### Preload Script (optional)
+
+If you have a preload script you need to call `init` from `@palette.dev/electron/preload`. Skip this if you don't have a preload script.
+
+```ts title="preload.js"
+import { init } from "@palette.dev/electron/preload";
+
+init();
 ```
 
 </TabItem>
