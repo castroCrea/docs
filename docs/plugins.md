@@ -8,7 +8,7 @@ Palette allows you to import only what you need.
 import { init, cpu } from "@palette.dev/electron/main";
 
 init({
-  key: "your-api-key",
+  key: "YOUR_CLIENT_KEY",
   plugins: [cpu()],
 });
 ```
@@ -19,7 +19,7 @@ init({
 import { init, cpu, events, vitals } from "@palette.dev/electron/renderer";
 
 init({
-  key: "your-api-key",
+  key: "YOUR_CLIENT_KEY",
   plugins: [cpu(), events(), vitals()],
 });
 ```

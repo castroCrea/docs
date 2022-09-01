@@ -16,7 +16,7 @@ import TabItem from '@theme/TabItem';
 import { init, events } from "@palette.dev/electron/main";
 
 init({
-  key: "your-api-key",
+  key: "YOUR_CLIENT_KEY",
   plugins: [
     events(),
     // ...
@@ -32,7 +32,7 @@ init({
 import { init, events } from "@palette.dev/electron/renderer";
 
 init({
-  key: "your-api-key",
+  key: "YOUR_CLIENT_KEY",
   plugins: [
     events(),
     // ...

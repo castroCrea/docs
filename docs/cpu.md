@@ -18,7 +18,7 @@ The CPU plugin collects CPU samples from Electron's renderer and main processes.
 import { init, cpu } from "@palette.dev/electron/main";
 
 init({
-  key: "your-api-key",
+  key: "YOUR_CLIENT_KEY",
   plugins: [
     cpu(),
     // ...
@@ -30,7 +30,7 @@ init({
 import { init, cpu } from "@palette.dev/electron/renderer";
 
 init({
-  key: "your-api-key",
+  key: "YOUR_CLIENT_KEY",
   plugins: [
     cpu(),
     // ...
@@ -46,7 +46,7 @@ CPU samples are collected in intervals. The default sample rate is `1000 ms`.
 import { init, cpu } from "@palette.dev/electron/main";
 
 init({
-  key: "your-api-key",
+  key: "YOUR_CLIENT_KEY",
   plugins: [
     cpu({
       samplingInterval: 1_000,

@@ -124,7 +124,7 @@ import { init, cpu, label } from "@palette.dev/electron/main";
 
 if (myApp.isStaging) {
   init({
-    key: "your-api-key",
+    key: "YOUR_CLIENT_KEY",
     plugins: [cpu()],
   });
 }

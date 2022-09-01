@@ -6,7 +6,7 @@ Palette's vitals plugin captures [web vitals](https://web.dev/vitals/) including
 import { init, vitals } from "@palette.dev/electron/renderer";
 
 init({
-  key: "your-api-key",
+  key: "YOUR_CLIENT_KEY",
   plugins: [vitals()],
 });
 ```
