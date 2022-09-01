@@ -36,7 +36,7 @@ import TabItem from '@theme/TabItem';
 #### Main Process
 
 ```ts title="main.js"
-import { init, events, profiler } from "@palette.dev/electron/main";
+import { init, events, measure, profiler } from "@palette.dev/electron/main";
 
 init({
   key: "YOUR_API_KEY",
