@@ -36,12 +36,12 @@ import TabItem from '@theme/TabItem';
 #### Main Process
 
 ```ts title="main.js"
-import { init, events } from "@palette.dev/electron/main";
+import { init, events, profiler } from "@palette.dev/electron/main";
 
 init({
   key: "YOUR_API_KEY",
-  // Collect click, and performance events
-  plugins: [events(), measure()],
+  // Collect click, performance events, and profiles
+  plugins: [events(), measure(), profiler()],
 });
 ```
 
@@ -54,12 +54,13 @@ import {
   vitals,
   measure,
   network,
+  profiler,
 } from "@palette.dev/electron/renderer";
 
 init({
   key: "YOUR_API_KEY",
-  // Collect click, web vitals, network, and performance events
-  plugins: [events(), vitals(), network(), measure()],
+  // Collect click, web vitals, network, performance events, and profiles
+  plugins: [events(), vitals(), network(), measure(), profiler()],
 });
 ```
 
@@ -77,12 +78,19 @@ init();
 <TabItem value="browser" label="Browser">
 
 ```ts title="index.js"
-import { init, events, vitals, measure, network } from "@palette.dev/browser";
+import {
+  init,
+  events,
+  vitals,
+  measure,
+  network,
+  profiler,
+} from "@palette.dev/browser";
 
 init({
   key: "YOUR_API_KEY",
-  // Collect click, web vitals, network, and performance events
-  plugins: [events(), vitals(), network(), measure()],
+  // Collect click, web vitals, network, performance events, and profiles
+  plugins: [events(), vitals(), network(), measure(), profiler],
 });
 ```
 
