@@ -36,12 +36,12 @@ import TabItem from '@theme/TabItem';
 #### Main Process
 
 ```ts title="main.js"
-import { init, cpu, events } from "@palette.dev/electron/main";
+import { init, events } from "@palette.dev/electron/main";
 
 init({
-  key: "your-api-key",
-  // Collect CPU, click, and performance events
-  plugins: [cpu(), events(), measure()],
+  key: "YOUR_API_KEY",
+  // Collect click, and performance events
+  plugins: [events(), measure()],
 });
 ```
 
@@ -50,7 +50,6 @@ init({
 ```ts title="renderer.js"
 import {
   init,
-  cpu,
   events,
   vitals,
   measure,
@@ -58,9 +57,9 @@ import {
 } from "@palette.dev/electron/renderer";
 
 init({
-  key: "your-api-key",
-  // Collect CPU, click, web vitals, network, and performance events
-  plugins: [cpu(), events(), vitals(), network(), measure()],
+  key: "YOUR_API_KEY",
+  // Collect click, web vitals, network, and performance events
+  plugins: [events(), vitals(), network(), measure()],
 });
 ```
 
@@ -78,10 +77,12 @@ init();
 <TabItem value="browser" label="Browser">
 
 ```ts title="index.js"
-import { init } from "@palette.dev/browser";
+import { init, events, vitals, measure, network } from "@palette.dev/browser";
 
 init({
-  key: "your-api-key",
+  key: "YOUR_API_KEY",
+  // Collect click, web vitals, network, and performance events
+  plugins: [events(), vitals(), network(), measure()],
 });
 ```
 
@@ -127,9 +128,7 @@ import { label } from "@palette.dev/electron/renderer";
 // Label and profile specific interactions or events
 const labelFn = (name, fn) => {
   label.start(name);
-  cpu.start({ samplingInterval: 500 });
   fn();
-  cpu.stop();
   label.end(name);
 };
 
