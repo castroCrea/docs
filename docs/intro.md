@@ -25,7 +25,7 @@ npm install @palette.dev/browser
 
 ## Usage
 
-Import `init` and pass your API key and the plugins you want to use. Import palette **before all other imports** in your app's entrypoint file.
+Find your **client key** at `https://palette.dev/[your-username]/[your-project]/settings` and pass it to `init` along with the plugins you want to use. Import palette **before all other imports** in your app's entrypoint file.
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -97,6 +97,34 @@ init({
 </TabItem>
 </Tabs>
 
+## Uploading Source Maps
+
+:::danger
+This step is required if you are using a bundler (like webpack, esbuild, and parcel).
+:::
+
+`@palette.dev/webpack-plugin` is a webpack plugin that uploads source maps to Palette. Webpack is the only bundler supported at the moment.
+
+#### Installation
+
+```bash
+npm install @palette.dev/webpack-plugin
+```
+
+#### Usage
+
+1. Find your **asset key** at `https://palette.dev/[your-username]/[your-project]/settings`.
+2. Add your **asset key** to your webpack config.
+
+```ts title="webpack.config.js"
+import PalettePlugin from "@palette.dev/webpack-plugin";
+
+export default {
+  // ...
+  plugins: [new PalettePlugin({ key: "YOUR_ASSET_KEY" })],
+};
+```
+
 ## Tagging
 
 ```ts
@@ -147,27 +175,3 @@ labelFn("react.render", () => {
 ```
 
 Labeling is supported in `electron/main`, `electron/renderer`, and `browser` clients.
-
-## Uploading Source Maps
-
-`@palette.dev/webpack-plugin` is a webpack plugin that uploads source maps to Palette. Webpack is the only bundler supported at the moment.
-
-### Installation
-
-```bash
-npm install @palette.dev/webpack-plugin --save-dev
-```
-
-### Usage
-
-1. Find your **asset key** at `https://palette.dev/[your-username]/[your-project]/settings`.
-2. Add your **asset key** to your webpack config.
-
-```ts title="webpack.config.js"
-import PalettePlugin from "@palette.dev/webpack-plugin";
-
-export default {
-  // ...
-  plugins: [new PalettePlugin({ key: "YOUR_ASSET_KEY" })],
-};
-```
