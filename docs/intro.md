@@ -39,7 +39,7 @@ import TabItem from '@theme/TabItem';
 import { init, events, measure, profiler } from "@palette.dev/electron/main";
 
 init({
-  key: "YOUR_API_KEY",
+  key: "YOUR_CLIENT_KEY",
   // Collect click, performance events, and profiles
   plugins: [events(), measure(), profiler()],
 });
@@ -58,7 +58,7 @@ import {
 } from "@palette.dev/electron/renderer";
 
 init({
-  key: "YOUR_API_KEY",
+  key: "YOUR_CLIENT_KEY",
   // Collect click, web vitals, network, performance events, and profiles
   plugins: [events(), vitals(), network(), measure(), profiler()],
 });
@@ -88,7 +88,7 @@ import {
 } from "@palette.dev/browser";
 
 init({
-  key: "YOUR_API_KEY",
+  key: "YOUR_CLIENT_KEY",
   // Collect click, web vitals, network, performance events, and profiles
   plugins: [events(), vitals(), network(), measure(), profiler],
 });
