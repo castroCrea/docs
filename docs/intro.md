@@ -4,7 +4,9 @@ slug: /
 
 # Getting Started
 
-## Installation
+## 1. Setup Client
+
+#### Installation
 
 <Tabs>
 <TabItem value="electron" label="Electron">
@@ -23,9 +25,11 @@ npm install @palette.dev/browser
 </TabItem>
 </Tabs>
 
-## Usage
+#### Client Key and Usage
 
+:::info
 Find your **client key** at `https://palette.dev/[your-username]/[your-project]/settings` and pass it to `init` along with the plugins you want to use. Import palette **before all other imports** in your app's entrypoint file.
+:::
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -97,7 +101,7 @@ init({
 </TabItem>
 </Tabs>
 
-## Uploading Source Maps
+## 2. Upload Source Maps
 
 :::danger
 This step is required if you are using a bundler (like webpack, esbuild, and parcel).
@@ -124,6 +128,35 @@ export default {
   plugins: [new PalettePlugin({ key: "YOUR_ASSET_KEY" })],
 };
 ```
+
+## 3. Add Headers
+
+In order for profiling to work, you need to add the following headers to your server responses.
+
+```
+"Document-Policy": "js-profiling"
+```
+
+Here are some examples of how to add headers in different frameworks.
+
+<Tabs>
+<TabItem value="electron" label="Electron">
+
+```npm2yarn
+npm install @palette.dev/electron
+```
+
+</TabItem>
+<TabItem value="browser" label="Browser">
+
+```npm2yarn
+npm install @palette.dev/browser
+```
+
+</TabItem>
+</Tabs>
+
+## Getting Started
 
 ## Tagging
 
