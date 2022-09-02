@@ -90,7 +90,7 @@ import {
 init({
   key: "YOUR_CLIENT_KEY",
   // Collect click, web vitals, network, performance events, and profiles
-  plugins: [events(), vitals(), network(), measure(), profiler],
+  plugins: [events(), vitals(), network(), measure(), profiler()],
 });
 ```
 
