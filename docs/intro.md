@@ -25,11 +25,13 @@ npm install @palette.dev/browser
 </TabItem>
 </Tabs>
 
-#### Client Key and Usage
+#### Find your Client Key
 
 :::info
 Find your **client key** at `https://palette.dev/[your-username]/[your-project]/settings` and pass it to `init` along with the plugins you want to use. Import palette **before all other imports** in your app's entrypoint file.
 :::
+
+Then pass your client key to your client's `init` function:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -156,7 +158,7 @@ npm install @palette.dev/browser
 </TabItem>
 </Tabs>
 
-## Getting Started
+## 4. Instrument Your App
 
 ## Tagging
 
