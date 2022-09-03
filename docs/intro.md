@@ -9,17 +9,17 @@ slug: /
 #### Installation
 
 <Tabs>
-<TabItem value="electron" label="Electron">
-
-```npm2yarn
-npm install @palette.dev/electron
-```
-
-</TabItem>
 <TabItem value="browser" label="Browser">
 
 ```npm2yarn
 npm install @palette.dev/browser
+```
+
+</TabItem>
+<TabItem value="electron" label="Electron">
+
+```npm2yarn
+npm install @palette.dev/electron
 ```
 
 </TabItem>
@@ -31,12 +31,33 @@ npm install @palette.dev/browser
 Find your **client key** at `https://palette.dev/[your-username]/[your-project]/settings` and pass it to `init` along with the plugins you want to use. Import palette **before all other imports** in your app's entrypoint file.
 :::
 
-Then pass your client key to your client's `init` function:
+Then pass your client key to your Palette's `init` function:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 <Tabs>
+<TabItem value="browser" label="Browser">
+
+```ts title="index.js"
+import {
+  init,
+  events,
+  vitals,
+  measure,
+  network,
+  profiler,
+} from "@palette.dev/browser";
+
+init({
+  key: "YOUR_CLIENT_KEY",
+  // Collect click, web vitals, network, performance events, and profiles
+  plugins: [events(), vitals(), network(), measure(), profiler()],
+});
+```
+
+</TabItem>
+
 <TabItem value="electron" label="Electron">
 
 #### Main Process
@@ -81,26 +102,6 @@ init();
 ```
 
 </TabItem>
-<TabItem value="browser" label="Browser">
-
-```ts title="index.js"
-import {
-  init,
-  events,
-  vitals,
-  measure,
-  network,
-  profiler,
-} from "@palette.dev/browser";
-
-init({
-  key: "YOUR_CLIENT_KEY",
-  // Collect click, web vitals, network, performance events, and profiles
-  plugins: [events(), vitals(), network(), measure(), profiler()],
-});
-```
-
-</TabItem>
 </Tabs>
 
 ## 2. Upload Source Maps
@@ -142,17 +143,18 @@ In order for profiling to work, you need to add the following headers to your se
 Here are some examples of how to add headers in different frameworks.
 
 <Tabs>
-<TabItem value="electron" label="Electron">
-
-```npm2yarn
-npm install @palette.dev/electron
-```
-
-</TabItem>
 <TabItem value="browser" label="Browser">
 
 ```npm2yarn
 npm install @palette.dev/browser
+```
+
+</TabItem>
+
+<TabItem value="electron" label="Electron">
+
+```npm2yarn
+npm install @palette.dev/electron
 ```
 
 </TabItem>
@@ -162,11 +164,27 @@ npm install @palette.dev/browser
 
 ## Tagging
 
-```ts
-import { tag } from "@palette.dev/electron/renderer";
+<Tabs>
+<TabItem value="browser" label="Browser">
 
-tag("userId", "u-123");
+```ts
+import { tag } from "@palette.dev/browser";
+
+tag("palette.userId", "u-123");
 ```
+
+</TabItem>
+
+<TabItem value="electron" label="Electron">
+
+```ts
+import { tag } from "@palette.dev/electron/main";
+
+tag("palette.userId", "u-123");
+```
+
+</TabItem>
+</Tabs>
 
 ## Custom Metrics
 
