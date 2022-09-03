@@ -134,33 +134,39 @@ export default {
 
 ## 3. Add Headers
 
+:::danger
+THIS IS BROWSER ONLY
+
 In order for profiling to work, you need to add the following headers to your server responses.
+:::
 
 ```
 "Document-Policy": "js-profiling"
 ```
 
-Here are some examples of how to add headers in different frameworks.
+## 4. Profile Your App
 
 <Tabs>
 <TabItem value="browser" label="Browser">
 
-```npm2yarn
-npm install @palette.dev/browser
+```ts
+import { profiler } from "@palette.dev/browser";
+
+tag("palette.userId", "u-123");
 ```
 
 </TabItem>
 
 <TabItem value="electron" label="Electron">
 
-```npm2yarn
-npm install @palette.dev/electron
+```ts
+import { profiler } from "@palette.dev/browser";
+
+tag("palette.userId", "u-123");
 ```
 
 </TabItem>
 </Tabs>
-
-## 4. Instrument Your App
 
 ## Tagging
 

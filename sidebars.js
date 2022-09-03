@@ -6,7 +6,6 @@ const sidebars = {
       Plugins: ["events", "vitals"],
     },
     "patterns",
-    "tag",
   ],
 };
 

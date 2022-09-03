@@ -5,7 +5,7 @@
 This pattern works well for user interactions like typing, dragging, and clicking. Generally, an user action that may be repeated multiple times works well with this pattern.
 
 ```ts
-import { cpu, label } from "@palette.dev/electron/renderer";
+import { profiler, label } from "@palette.dev/electron/renderer";
 
 /**
  * A utility for profiling and label frequent events
@@ -49,8 +49,8 @@ export const debounceLabel = (
 ```tsx
 const handleInputAndLabel = debounceLabel(
   handleInput,
-  () => cpu.start({ samplingInterval: 500 }),
-  () => cpu.stop(),
+  () => profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 }),
+  () => profiler.stop(),
   {
     name: "handle-input",
     timeout: 1_000,
@@ -92,9 +92,9 @@ export const labelFn = async (
 ) => {
   const { name } = { name: fn.name ?? "anonymous", ...opts };
   label.start(name);
-  start();
+  profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
   await fn();
-  stop();
+  profiler.stop();
   label.end(name);
 };
 ```
@@ -102,30 +102,13 @@ export const labelFn = async (
 #### Examples of `measureFn`:
 
 ```ts
-// Profile the CPU and create a label named "electron-when-ready"
+// Profile and create a label named "electron-when-ready"
 labelFn(
   () => loadScript("https://cdn.example.com/my-scripts.js"), // load a script
-  () => cpu.start({ samplingInterval: 500 }), // start cpu profiling before loading the script
-  cpu.stop, // stop cpu profiling after loading the script
+  () => profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 }), // start profiling before loading the script
+  () => profiler.stop(), // stop profiling after loading the script
   {
     name: "load-script", // the name of the label
   }
 );
-```
-
-## Conditional Sampling
-
-You'll often want to sample only a subset of your users.
-
-Here's how you could enable sampling in your staging environment:
-
-```ts {3,11,16}
-import { init, cpu, label } from "@palette.dev/electron/main";
-
-if (myApp.isStaging) {
-  init({
-    key: "YOUR_CLIENT_KEY",
-    plugins: [cpu()],
-  });
-}
 ```
