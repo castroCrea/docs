@@ -134,15 +134,86 @@ export default {
 
 ## 3. Add Headers
 
-:::danger
-THIS IS BROWSER ONLY
-
-In order for profiling to work, you need to add the following headers to your server responses.
-:::
+To enable profiling, you need to add the following headers to your server responses.
 
 ```
 "Document-Policy": "js-profiling"
 ```
+
+<Tabs>
+<TabItem value="next.js" label="Next.js">
+
+```js title="next.config.js"
+module.exports = {
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Document-Policy",
+            value: "js-profiling",
+          },
+        ],
+      },
+    ];
+  },
+};
+```
+
+See the [next.js docs](https://nextjs.org/docs/api-reference/next.config.js/headers) for more info.
+
+</TabItem>
+
+<TabItem value="vercel" label="Vercel (no next.js)">
+
+```json title="vercel.json"
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Document-Policy",
+          "value": "js-profiling"
+        }
+      ]
+    }
+  ]
+}
+```
+
+See the [vercel docs](https://vercel.com/docs/project-configuration#project-configuration/headers) for more info.
+
+</TabItem>
+
+<TabItem value="cra" label="Create React App">
+
+```js title="src/setupProxy.js"
+module.exports = function (app) {
+  app.use(function (req, res, next) {
+    res.setHeader("Document-Policy", "js-profiling");
+    next();
+  });
+};
+```
+
+See the [create-react-app docs](https://create-react-app.dev/docs/proxying-api-requests-in-development/) for more info.
+
+</TabItem>
+
+<TabItem value="netlify" label="Netlify">
+
+```toml title="_headers"
+/*
+  Document-Policy: js-profiling
+```
+
+See the [netlify docs](https://docs.netlify.com/routing/headers/#syntax-for-the-headers-file) for more info.
+
+</TabItem>
+
+</Tabs>
 
 ## 4. Start the Profiler
 
