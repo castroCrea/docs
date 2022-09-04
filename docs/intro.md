@@ -144,7 +144,7 @@ In order for profiling to work, you need to add the following headers to your se
 "Document-Policy": "js-profiling"
 ```
 
-## 4. Profile Your App
+## 4. Start the Profiler
 
 <Tabs>
 <TabItem value="browser" label="Browser">
@@ -152,7 +152,11 @@ In order for profiling to work, you need to add the following headers to your se
 ```ts
 import { profiler } from "@palette.dev/browser";
 
-tag("palette.userId", "u-123");
+// Profile page load
+profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
+addEventListener("load", () => {
+  profiler.stop();
+});
 ```
 
 </TabItem>
@@ -160,15 +164,25 @@ tag("palette.userId", "u-123");
 <TabItem value="electron" label="Electron">
 
 ```ts
-import { profiler } from "@palette.dev/browser";
+import { profiler } from "@palette.dev/electron/renderer";
 
-tag("palette.userId", "u-123");
+// Profile page load
+profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
+addEventListener("load", () => {
+  profiler.stop();
+});
 ```
 
 </TabItem>
 </Tabs>
 
+For more examples of profiling, see the [profiling patterns](https://docs.palette.dev/patterns).
+
 ## Tagging
+
+Tags allow you to provide additional context about a user's session that might be useful later.
+
+Often you'll want to tag a session id and a user id with a tag to identify users.
 
 <Tabs>
 <TabItem value="browser" label="Browser">

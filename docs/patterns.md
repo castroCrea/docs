@@ -1,4 +1,4 @@
-# Sampling Patterns
+# Profiling Examples
 
 ## Frequent Events
 
