@@ -261,7 +261,7 @@ Often you'll want to tag a session id and a user id with a tag to identify users
 ```ts
 import { tag } from "@palette.dev/browser";
 
-tag("palette.userId", "u-123");
+tag("palette.userId", "user-id-123");
 ```
 
 </TabItem>
@@ -271,7 +271,7 @@ tag("palette.userId", "u-123");
 ```ts
 import { tag } from "@palette.dev/electron/main";
 
-tag("palette.userId", "u-123");
+tag("palette.userId", "user-id-123");
 ```
 
 </TabItem>
