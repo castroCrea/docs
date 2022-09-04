@@ -49,7 +49,7 @@ init({
   key: "YOUR_CLIENT_KEY",
   plugins: [
     cpu({
-      samplingInterval: 1_000,
+      sampleInterval: 1_000,
     }),
   ],
 });

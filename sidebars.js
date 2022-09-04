@@ -2,10 +2,10 @@
 const sidebars = {
   sidebar: [
     "intro",
+    "patterns",
     {
       Plugins: ["events", "vitals"],
     },
-    "patterns",
   ],
 };
 
