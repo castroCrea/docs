@@ -107,7 +107,7 @@ init();
 ## 2. Upload Source Maps
 
 :::danger
-This step is required if you are using a bundler (like webpack, esbuild, and parcel).
+This step is required if you are using a framework or a bundler (like next.js, svelte, webpack, esbuild, and parcel).
 :::
 
 `@palette.dev/webpack-plugin` is a webpack plugin that uploads source maps to Palette. Webpack is the only bundler supported at the moment.
@@ -150,7 +150,7 @@ module.exports = {
 
 </TabItem>
 
-<TabItem value="vanilla" label="Vanilla Webpack">
+<TabItem value="webpack" label="Webpack">
 
 ```ts title="webpack.config.js"
 const PaletteWebpackPlugin = require("@palette.dev/webpack-plugin");
@@ -252,6 +252,21 @@ See the [netlify docs](https://docs.netlify.com/routing/headers/#syntax-for-the-
 
 </TabItem>
 
+<TabItem value="electron" label="Electron">
+
+The `profiler` plugin from `@palette.dev/electron/main` adds the corresponding headers (this was done in [step 1](#1-setup-client)).
+
+```ts
+import { init, profiler } from "@palette.dev/electron/main";
+
+init({
+  key: "YOUR_CLIENT_KEY",
+  plugins: [profiler()],
+});
+```
+
+</TabItem>
+
 </Tabs>
 
 ## 4. Start the Profiler
@@ -264,17 +279,13 @@ import { profiler } from "@palette.dev/browser";
 
 // Profile page load
 profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
-addEventListener("load", profiler.stop);
+addEventListener("load", () => profiler.stop());
 
 // A utility for profiling and label frequent events
-const debounce = (
-  start: () => void,
-  stop: () => void,
-  _opts?: { timeout?: number }
-) => {
+const debounce = (start, stop, opts) => {
   const { timeout } = {
     timeout: 1_000,
-    ..._opts,
+    ...opts,
   };
   let timeoutId;
   return () => {
@@ -293,14 +304,14 @@ const debounce = (
 // Debounce starting the profiler
 const debounceProfiler = debounce(
   () => {
-    label.start("ui.wheel");
+    label.start("ui.interaction");
     profiler.start({
       sampleInterval: 10,
       maxBufferSize: 10_000,
     });
   },
   () => {
-    label.end("ui.wheel");
+    label.end("ui.interaction");
     profiler.stop();
   }
 );
@@ -319,12 +330,50 @@ import { profiler } from "@palette.dev/electron/renderer";
 
 // Profile page load
 profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
-addEventListener("load", () => {
-  profiler.stop();
-});
+addEventListener("load", () => profiler.stop());
+
+// A utility for profiling and label frequent events
+const debounce = (start, stop, opts) => {
+  const { timeout } = {
+    timeout: 1_000,
+    ...opts,
+  };
+  let timeoutId;
+  return () => {
+    if (timeoutId == undefined) {
+      start();
+    } else {
+      clearTimeout(timeoutId);
+    }
+    // Debounce marking the end of the label
+    timeoutId = setTimeout(() => {
+      stop();
+      timeoutId = undefined;
+    }, timeout);
+  };
+};
+// Debounce starting the profiler
+const debounceProfiler = debounce(
+  () => {
+    label.start("ui.interaction");
+    profiler.start({
+      sampleInterval: 10,
+      maxBufferSize: 10_000,
+    });
+  },
+  () => {
+    label.end("ui.interaction");
+    profiler.stop();
+  }
+);
+// Profile scroll, mousemove, and click events
+addEventListener("wheel", debounceProfiler);
+addEventListener("mousemove", debounceProfiler);
+addEventListener("click", debounceProfiler);
 ```
 
 </TabItem>
+
 </Tabs>
 
 For more examples of profiling, see the [profiling patterns](https://docs.palette.dev/patterns).
