@@ -123,14 +123,53 @@ npm install @palette.dev/webpack-plugin
 1. Find your **asset key** at `https://palette.dev/[your-username]/[your-project]/settings`.
 2. Add your **asset key** to your webpack config.
 
-```ts title="webpack.config.js"
-import PalettePlugin from "@palette.dev/webpack-plugin";
+<Tabs>
+<TabItem value="next" label="Next.js">
 
-export default {
+```ts title="next.config.js"
+const PaletteWebpackPlugin = require("@palette.dev/webpack-plugin");
+
+module.exports = {
   // ...
-  plugins: [new PalettePlugin({ key: "YOUR_ASSET_KEY" })],
+  webpack(config) {
+    if (config.mode === "production") {
+      config.plugins.push(
+        new PaletteWebpackPlugin({
+          key: "YOUR_ASSET_KEY",
+          include: ["./.next/static/chunks"],
+          include: {
+            ext: "js",
+          },
+        })
+      );
+    }
+    return config;
+  },
 };
 ```
+
+</TabItem>
+
+<TabItem value="vanilla" label="Vanilla Webpack">
+
+```ts title="webpack.config.js"
+const PaletteWebpackPlugin = require("@palette.dev/webpack-plugin");
+
+module.exports = {
+  // ...
+  plugins: [
+    new PaletteWebpackPlugin({
+      key: "YOUR_ASSET_KEY",
+      include: {
+        ext: "js",
+      },
+    }),
+  ],
+};
+```
+
+</TabItem>
+</Tabs>
 
 ## 3. Add Headers
 
@@ -225,9 +264,50 @@ import { profiler } from "@palette.dev/browser";
 
 // Profile page load
 profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
-addEventListener("load", () => {
-  profiler.stop();
-});
+addEventListener("load", profiler.stop);
+
+// A utility for profiling and label frequent events
+const debounce = (
+  start: () => void,
+  stop: () => void,
+  _opts?: { timeout?: number }
+) => {
+  const { timeout } = {
+    timeout: 1_000,
+    ..._opts,
+  };
+  let timeoutId;
+  return () => {
+    if (timeoutId == undefined) {
+      start();
+    } else {
+      clearTimeout(timeoutId);
+    }
+    // Debounce marking the end of the label
+    timeoutId = setTimeout(() => {
+      stop();
+      timeoutId = undefined;
+    }, timeout);
+  };
+};
+// Debounce starting the profiler
+const debounceProfiler = debounce(
+  () => {
+    label.start("ui.wheel");
+    profiler.start({
+      sampleInterval: 10,
+      maxBufferSize: 10_000,
+    });
+  },
+  () => {
+    label.end("ui.wheel");
+    profiler.stop();
+  }
+);
+// Profile scroll, mousemove, and click events
+addEventListener("wheel", debounceProfiler);
+addEventListener("mousemove", debounceProfiler);
+addEventListener("click", debounceProfiler);
 ```
 
 </TabItem>
