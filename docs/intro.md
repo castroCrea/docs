@@ -282,11 +282,7 @@ profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
 addEventListener("load", () => profiler.stop());
 
 // A utility for profiling and label frequent events
-const debounce = (start, stop, opts) => {
-  const { timeout } = {
-    timeout: 1_000,
-    ...opts,
-  };
+const debounce = (start, stop, opts = { timeout: 1_000 }) => {
   let timeoutId;
   return () => {
     if (timeoutId == undefined) {
@@ -301,6 +297,7 @@ const debounce = (start, stop, opts) => {
     }, timeout);
   };
 };
+
 // Debounce starting the profiler
 const debounceProfiler = debounce(
   () => {
@@ -315,6 +312,7 @@ const debounceProfiler = debounce(
     profiler.stop();
   }
 );
+
 // Profile scroll, mousemove, and click events
 addEventListener("wheel", debounceProfiler);
 addEventListener("mousemove", debounceProfiler);
@@ -333,11 +331,7 @@ profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
 addEventListener("load", () => profiler.stop());
 
 // A utility for profiling and label frequent events
-const debounce = (start, stop, opts) => {
-  const { timeout } = {
-    timeout: 1_000,
-    ...opts,
-  };
+const debounce = (start, stop, opts = { timeout: 1_000 }) => {
   let timeoutId;
   return () => {
     if (timeoutId == undefined) {
@@ -405,27 +399,6 @@ tag("palette.userId", "user-id-123");
 
 </TabItem>
 </Tabs>
-
-## Custom Metrics
-
-Capture custom metrics with the built-in [`performance.mark()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/mark) and [`performance.measure`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/measure) web APIs. Palette's `measure` plugin records all events recorded by `mark` and `measure`.
-
-```ts
-// Mark events at a specific action or event
-performance.mark("myApp.someUserEvent", {
-  detail: "some event details",
-});
-performance.mark("myApp.stateChange", {
-  detail: {
-    from: "stateA",
-    to: "stateB",
-  },
-});
-
-// Measuring time durations
-performance.mark("userAction.start"); // marks starting point
-performance.measure("userAction.duration", "userAction.start"); // measures from starting point
-```
 
 ## Labeling
 
