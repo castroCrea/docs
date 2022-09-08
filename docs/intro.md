@@ -136,7 +136,7 @@ module.exports = {
       config.plugins.push(
         new PaletteWebpackPlugin({
           key: "YOUR_ASSET_KEY",
-          include: ["./.next/static/chunks"],
+          include: [".next/static"],
           include: {
             ext: "js",
           },
@@ -145,6 +145,25 @@ module.exports = {
     }
     return config;
   },
+};
+```
+
+</TabItem>
+
+<TabItem value="cra" label="Create React App (ejected)">
+
+```ts title="config/webpack.config.js"
+const PaletteWebpackPlugin = require("@palette.dev/webpack-plugin");
+
+module.exports = {
+  // ...
+  plugins: [
+    isEnvProduction &&
+      new PaletteWebpackPlugin({
+        key: "YOUR_ASSET_KEY",
+        include: ["build/static/js"],
+      }),
+  ].filter(Boolean),
 };
 ```
 
