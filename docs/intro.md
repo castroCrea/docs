@@ -25,10 +25,10 @@ npm install @palette.dev/electron
 </TabItem>
 </Tabs>
 
-#### Find your Client Key
+#### Get your Client Key
 
 :::info
-Find your **client key** at `https://palette.dev/[your-username]/[your-project]/settings` and pass it to `init` along with the plugins you want to use. Import palette **before all other imports** in your app's entrypoint file.
+Get your **client key** at `https://palette.dev/[your-username]/[your-project]/settings` and pass it to `init` along with the plugins you want to use. Import palette **before all other imports** in your app's entrypoint file.
 :::
 
 Then pass your client key to your Palette's `init` function:
@@ -120,7 +120,7 @@ npm install @palette.dev/webpack-plugin
 
 #### Usage
 
-1. Find your **asset key** at `https://palette.dev/[your-username]/[your-project]/settings`.
+1. Get your **asset key** at `https://palette.dev/[your-username]/[your-project]/settings`.
 2. Add your **asset key** to your webpack config.
 
 <Tabs>
