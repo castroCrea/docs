@@ -179,9 +179,6 @@ module.exports = {
   plugins: [
     new PaletteWebpackPlugin({
       key: "YOUR_ASSET_KEY",
-      include: {
-        ext: "js",
-      },
     }),
   ],
 };
@@ -293,8 +290,10 @@ init({
 <Tabs>
 <TabItem value="browser" label="Browser">
 
-```ts
-import { profiler } from "@palette.dev/browser";
+Include this at the **top-level** of your app's entrypoint:
+
+```ts title="index.js"
+import { profiler, label } from "@palette.dev/browser";
 
 // Profile page load
 profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
@@ -313,7 +312,7 @@ const debounce = (start, stop, opts = { timeout: 1_000 }) => {
     timeoutId = setTimeout(() => {
       stop();
       timeoutId = undefined;
-    }, timeout);
+    }, timeoutId);
   };
 };
 
@@ -336,14 +335,21 @@ const debounceProfiler = debounce(
 addEventListener("wheel", debounceProfiler);
 addEventListener("mousemove", debounceProfiler);
 addEventListener("click", debounceProfiler);
+addEventListener("keypress", debounceProfiler);
 ```
+
+:::warning
+Palette only emits metrics in production. You'll need to build your app to see metrics in your dashboard.
+:::
 
 </TabItem>
 
 <TabItem value="electron" label="Electron">
 
-```ts
-import { profiler } from "@palette.dev/electron/renderer";
+Include this at the **top-level** of your app's **renderer process**:
+
+```ts title="renderer.js"
+import { profiler, label } from "@palette.dev/electron/renderer";
 
 // Profile page load
 profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
@@ -362,7 +368,7 @@ const debounce = (start, stop, opts = { timeout: 1_000 }) => {
     timeoutId = setTimeout(() => {
       stop();
       timeoutId = undefined;
-    }, timeout);
+    }, timeoutId);
   };
 };
 // Debounce starting the profiler
@@ -383,7 +389,12 @@ const debounceProfiler = debounce(
 addEventListener("wheel", debounceProfiler);
 addEventListener("mousemove", debounceProfiler);
 addEventListener("click", debounceProfiler);
+addEventListener("keypress", debounceProfiler);
 ```
+
+:::warning
+Palette only emits metrics in production. You'll need to package your electron app to see metrics in your dashboard.
+:::
 
 </TabItem>
 
@@ -391,78 +402,6 @@ addEventListener("click", debounceProfiler);
 
 For more examples of profiling, see the [profiling patterns](https://docs.palette.dev/patterns).
 
-## Tagging
+## You're all set! 🎉
 
-Tags allow you to provide additional context about a user's session that might be useful later.
-
-Often you'll want to tag a session id and a user id with a tag to identify users.
-
-<Tabs>
-<TabItem value="browser" label="Browser">
-
-```ts
-import { tag } from "@palette.dev/browser";
-
-tag("palette.userId", "user-id-123");
-```
-
-</TabItem>
-
-<TabItem value="electron" label="Electron">
-
-```ts
-import { tag } from "@palette.dev/electron/main";
-
-tag("palette.userId", "user-id-123");
-```
-
-</TabItem>
-</Tabs>
-
-## Labeling
-
-A label marks a critical interaction in Palette's timeline.
-
-<Tabs>
-<TabItem value="browser" label="Browser">
-
-```ts
-import { label } from "@palette.dev/browser";
-
-// Label and profile specific interactions or events
-const labelFn = (name, fn) => {
-  label.start(name);
-  fn();
-  label.end(name);
-};
-
-// Profile initial react render
-labelFn("react.render", () => {
-  render(<MyApp />, document.getElementById("root"));
-});
-```
-
-</TabItem>
-
-<TabItem value="electron" label="Electron">
-
-```ts
-import { label } from "@palette.dev/electron/renderer";
-
-// Label and profile specific interactions or events
-const labelFn = (name, fn) => {
-  label.start(name);
-  fn();
-  label.end(name);
-};
-
-// Profile initial react render
-labelFn("react.render", () => {
-  render(<MyApp />, document.getElementById("root"));
-});
-```
-
-</TabItem>
-</Tabs>
-
-Labeling is supported in `electron/main`, `electron/renderer`, and `browser` clients.
+Go to your project's page to see your metrics.

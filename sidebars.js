@@ -3,6 +3,8 @@ const sidebars = {
   sidebar: [
     "intro",
     "patterns",
+    "labels",
+    "tags",
     {
       Plugins: ["events", "vitals"],
     },
