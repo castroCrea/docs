@@ -106,7 +106,7 @@ init();
 
 ## 2. Upload Source Maps
 
-:::danger
+:::info
 This step is required if you are using a framework or a bundler (like next.js, svelte, webpack, esbuild, and parcel).
 :::
 
