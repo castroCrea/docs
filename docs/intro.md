@@ -127,14 +127,14 @@ npm install @palette.dev/webpack-plugin
 <TabItem value="next" label="Next.js">
 
 ```ts title="next.config.js"
-const PaletteWebpackPlugin = require("@palette.dev/webpack-plugin");
+const PalettePlugin = require("@palette.dev/webpack-plugin");
 
 module.exports = {
   // ...
   webpack(config) {
     if (config.mode === "production") {
       config.plugins.push(
-        new PaletteWebpackPlugin({
+        new PalettePlugin({
           key: "YOUR_ASSET_KEY",
           include: [".next/static"],
           include: {
@@ -153,13 +153,13 @@ module.exports = {
 <TabItem value="cra" label="Create React App (ejected)">
 
 ```ts title="config/webpack.config.js"
-const PaletteWebpackPlugin = require("@palette.dev/webpack-plugin");
+const PalettePlugin = require("@palette.dev/webpack-plugin");
 
 module.exports = {
   // ...
   plugins: [
     isEnvProduction &&
-      new PaletteWebpackPlugin({
+      new PalettePlugin({
         key: "YOUR_ASSET_KEY",
         include: ["build/static/js"],
       }),
@@ -172,12 +172,12 @@ module.exports = {
 <TabItem value="webpack" label="Webpack">
 
 ```ts title="webpack.config.js"
-const PaletteWebpackPlugin = require("@palette.dev/webpack-plugin");
+const PalettePlugin = require("@palette.dev/webpack-plugin");
 
 module.exports = {
   // ...
   plugins: [
-    new PaletteWebpackPlugin({
+    new PalettePlugin({
       key: "YOUR_ASSET_KEY",
     }),
   ],
