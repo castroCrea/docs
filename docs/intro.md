@@ -220,7 +220,9 @@ See the [next.js docs](https://nextjs.org/docs/api-reference/next.config.js/head
 
 </TabItem>
 
-<TabItem value="vercel" label="Vercel (no next.js)">
+<TabItem value="vercel" label="Vercel">
+
+Use the following config if you're deploying a **non-next.js framework** to Vercel:
 
 ```json title="vercel.json"
 {
@@ -242,18 +244,26 @@ See the [vercel docs](https://vercel.com/docs/project-configuration#project-conf
 
 </TabItem>
 
-<TabItem value="cra" label="Create React App">
+<TabItem value="vercel-legacy" label="Vercel (legacy config)">
 
-```js title="src/setupProxy.js"
-module.exports = function (app) {
-  app.use(function (req, res, next) {
-    res.setHeader("Document-Policy", "js-profiling");
-    next();
-  });
-};
+Use the following config if you're using Vercel's [legacy `routes` config](https://vercel.com/docs/project-configuration#legacy/routes):
+
+```json title="vercel.json"
+{
+  "routes": [
+    {
+      "src": "/[^.]+",
+      "dest": "/",
+      "status": 200,
+      "headers": {
+        "Document-Policy": "js-profiling"
+      }
+    }
+  ]
+}
 ```
 
-See the [create-react-app docs](https://create-react-app.dev/docs/proxying-api-requests-in-development/) for more info.
+See the [vercel docs](https://vercel.com/docs/project-configuration#legacy/routes) for more info.
 
 </TabItem>
 
@@ -270,9 +280,11 @@ See the [netlify docs](https://docs.netlify.com/routing/headers/#syntax-for-the-
 
 <TabItem value="electron" label="Electron">
 
-The `profiler` plugin from `@palette.dev/electron/main` adds the corresponding headers (this was done in [step 1](#1-setup-client)).
+This step was already done in [step 1](#1-setup-client).
 
-```ts
+The `profiler` plugin from `@palette.dev/electron/main` adds the corresponding headers.
+
+```ts title="main.js"
 import { init, profiler } from "@palette.dev/electron/main";
 
 init({
@@ -327,7 +339,7 @@ const debounceProfiler = debounce(
   },
   () => {
     label.end("ui.interaction");
-    profiler.stop();
+    return profiler.stop();
   }
 );
 
@@ -382,7 +394,7 @@ const debounceProfiler = debounce(
   },
   () => {
     label.end("ui.interaction");
-    profiler.stop();
+    return profiler.stop();
   }
 );
 // Profile scroll, mousemove, and click events
