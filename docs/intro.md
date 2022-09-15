@@ -112,19 +112,21 @@ This step is required if you are using a framework or a bundler (like next.js, s
 
 `@palette.dev/webpack-plugin` is a webpack plugin that uploads source maps to Palette. Webpack is the only bundler supported at the moment.
 
-#### Installation
-
-```bash
-npm install @palette.dev/webpack-plugin
-```
-
-#### Usage
+#### Prerequisite
 
 1. Get your **asset key** at `https://palette.dev/[your-username]/[your-project]/settings`.
 2. Add your **asset key** to your webpack config.
 
 <Tabs>
 <TabItem value="next" label="Next.js">
+
+#### Installation
+
+```bash
+npm install @palette.dev/webpack-plugin --save-dev
+```
+
+#### Usage
 
 ```ts title="next.config.js"
 const PalettePlugin = require("@palette.dev/webpack-plugin");
@@ -152,6 +154,14 @@ module.exports = {
 
 <TabItem value="cra" label="Create React App (ejected)">
 
+#### Installation
+
+```bash
+npm install @palette.dev/webpack-plugin --save-dev
+```
+
+#### Usage
+
 ```ts title="config/webpack.config.js"
 const PalettePlugin = require("@palette.dev/webpack-plugin");
 
@@ -171,6 +181,14 @@ module.exports = {
 
 <TabItem value="webpack" label="Webpack">
 
+#### Installation
+
+```bash
+npm install @palette.dev/webpack-plugin --save-dev
+```
+
+#### Usage
+
 ```ts title="webpack.config.js"
 const PalettePlugin = require("@palette.dev/webpack-plugin");
 
@@ -182,6 +200,50 @@ module.exports = {
     }),
   ],
 };
+```
+
+</TabItem>
+
+<TabItem value="vite" label="Vite">
+
+#### Installation
+
+```bash
+npm install @palette.dev/plugin-vite --save-dev
+```
+
+#### Usage
+
+Update your vite config
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import palette from "@palette.dev/plugin-vite";
+
+export default defineConfig({
+  plugins: [
+    // Add palette plugin
+    palette({
+      key: "YOUR_ASSET_KEY",
+      outputPath: "dist/assets",
+    }),
+  ],
+  build: {
+    // Output source maps
+    sourcemap: true,
+  },
+});
+```
+
+Import `virtual:@palette.dev/plugin-vite/init` in your app's entrypoint (e.g. main.js):
+
+```ts title="main.ts"
+import "virtual:@palette.dev/plugin-vite/init"; // import before other imports
+import { init } from "@palette.dev/...";
+
+init({
+  // ...palette opts
+});
 ```
 
 </TabItem>
