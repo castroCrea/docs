@@ -217,6 +217,7 @@ npm install @palette.dev/plugin-vite --save-dev
 Update your vite config
 
 ```ts title="vite.config.ts"
+import path from "path";
 import { defineConfig } from "vite";
 import palette from "@palette.dev/plugin-vite";
 
