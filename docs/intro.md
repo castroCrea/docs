@@ -110,12 +110,10 @@ init();
 This step is required if you are using a framework or a bundler (like next.js, svelte, webpack, esbuild, and parcel).
 :::
 
-`@palette.dev/webpack-plugin` is a webpack plugin that uploads source maps to Palette. Webpack is the only bundler supported at the moment.
-
 #### Prerequisite
 
 1. Get your **asset key** at `https://palette.dev/[your-username]/[your-project]/settings`.
-2. Add your **asset key** to your webpack config.
+2. Define a `PALETTE_ASSET_KEY` env variable in your CI environment.
 
 <Tabs>
 <TabItem value="next" label="Next.js">
@@ -137,7 +135,7 @@ module.exports = {
     if (config.mode === "production") {
       config.plugins.push(
         new PalettePlugin({
-          key: "YOUR_ASSET_KEY",
+          key: process.env.PALETTE_ASSET_KEY,
           include: [".next/static"],
           include: {
             ext: "js",
@@ -170,7 +168,7 @@ module.exports = {
   plugins: [
     isEnvProduction &&
       new PalettePlugin({
-        key: "YOUR_ASSET_KEY",
+        key: process.env.PALETTE_ASSET_KEY,
         include: ["build/static/js"],
       }),
   ].filter(Boolean),
@@ -196,7 +194,7 @@ module.exports = {
   // ...
   plugins: [
     new PalettePlugin({
-      key: "YOUR_ASSET_KEY",
+      key: process.env.PALETTE_ASSET_KEY,
     }),
   ],
 };
@@ -225,7 +223,7 @@ export default defineConfig({
   plugins: [
     // Add palette plugin
     palette({
-      key: "YOUR_ASSET_KEY",
+      key: process.env.PALETTE_ASSET_KEY,
       outputPath: "dist/assets",
     }),
   ],
@@ -257,6 +255,48 @@ init({
 ```
 
 </TabItem>
+
+<TabItem value="cli" label="CLI">
+
+#### Installation
+
+```bash
+npm install @palette.dev/cli --save-dev
+```
+
+#### Usage
+
+Run the CLI from your project's root directory. Asset paths are relative to the project root.
+
+```bash
+palette upload path/to/assets
+```
+
+#### Example
+
+Suppose you have the following directory structure:
+
+<!-- Directory tree generated with https://tree.nathanfriend.io -->
+
+```
+my-project/
+├── dist/
+│   └── main.js
+└── package.json
+```
+
+Define an upload script in your `package.json`:
+
+```json
+{
+  "scripts": {
+    "upload": "palette upload dist"
+  }
+}
+```
+
+</TabItem>
+
 </Tabs>
 
 ## 3. Add Headers {#headers}
@@ -264,7 +304,9 @@ init({
 To enable profiling, you need to add the following headers to your server responses.
 
 ```
+
 "Document-Policy": "js-profiling"
+
 ```
 
 <Tabs>
