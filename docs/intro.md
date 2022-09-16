@@ -4,7 +4,7 @@ slug: /
 
 # Getting Started
 
-## 1. Setup Client
+## 1. Setup Client {#client}
 
 #### Installation
 
@@ -104,7 +104,7 @@ init();
 </TabItem>
 </Tabs>
 
-## 2. Upload Source Maps
+## 2. Upload Source Maps {#assets}
 
 :::info
 This step is required if you are using a framework or a bundler (like next.js, svelte, webpack, esbuild, and parcel).
@@ -258,7 +258,7 @@ init({
 </TabItem>
 </Tabs>
 
-## 3. Add Headers
+## 3. Add Headers {#headers}
 
 To enable profiling, you need to add the following headers to your server responses.
 
@@ -368,7 +368,7 @@ init({
 
 </Tabs>
 
-## 4. Start the Profiler
+## 4. Start the Profiler {#profiler}
 
 <Tabs>
 <TabItem value="browser" label="Browser">
@@ -483,7 +483,7 @@ Palette only emits metrics in production. You'll need to package your electron a
 
 </Tabs>
 
-For more examples of profiling, see the [profiling patterns](https://docs.palette.dev/patterns).
+For more examples of profiling, see the [profiling patterns](/patterns).
 
 ## You're all set! 🎉
 
