@@ -231,6 +231,15 @@ export default defineConfig({
   build: {
     // Output source maps
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        sourcemapPathTransform: (relativeSourcePath, sourcemapPath) =>
+          path.relative(
+            process.cwd(),
+            path.resolve(path.dirname(sourcemapPath), relativeSourcePath)
+          ),
+      },
+    },
   },
 });
 ```
