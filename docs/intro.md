@@ -28,10 +28,10 @@ npm install @palette.dev/electron
 #### Get your Client Key
 
 :::info
-Get your **client key** at `https://palette.dev/[your-username]/[your-project]/settings` and pass it to `init` along with the plugins you want to use. Import palette **before all other imports** in your app's entrypoint file.
+Get your **client key** at `https://palette.dev/[your-username]/[your-project]/settings`
 :::
 
-Then pass your client key to your Palette's `init` function:
+Import palette **before all other imports** in your app's entrypoint file (eg. main.js or index.js):
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -113,7 +113,7 @@ This step is required if you are using a framework or a bundler (like next.js, s
 #### Prerequisite
 
 1. Get your **asset key** at `https://palette.dev/[your-username]/[your-project]/settings`.
-2. Define an environmental variable named `PALETTE_ASSET_KEY` in your CI environment.
+2. In your CI, set an env variable named `PALETTE_ASSET_KEY` to your **asset key**
 
 <Tabs>
 <TabItem value="next" label="Next.js">
@@ -272,6 +272,8 @@ Run the CLI from your project's root directory. Asset paths are relative to the 
 palette upload path/to/assets
 ```
 
+The asset key will be read from the `PALETTE_ASSET_KEY` env variable.
+
 #### Example
 
 Suppose you have the following directory structure:
@@ -394,7 +396,7 @@ See the [netlify docs](https://docs.netlify.com/routing/headers/#syntax-for-the-
 
 <TabItem value="electron" label="Electron">
 
-This step was already done in [step 1](#1-setup-client).
+This step was already done in [step 1](#client).
 
 The `profiler` plugin from `@palette.dev/electron/main` adds the corresponding headers.
 
