@@ -113,7 +113,7 @@ This step is required if you are using a framework or a bundler (like next.js, s
 #### Prerequisite
 
 1. Get your **asset key** at `https://palette.dev/[your-username]/[your-project]/settings`.
-2. Define a `PALETTE_ASSET_KEY` env variable in your CI environment.
+2. Define an environmental variable named `PALETTE_ASSET_KEY` in your CI environment.
 
 <Tabs>
 <TabItem value="next" label="Next.js">
