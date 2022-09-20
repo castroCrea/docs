@@ -64,7 +64,7 @@ const debounce = (start, stop, opts = { timeout: 1_000 }) => {
     timeoutId = setTimeout(() => {
       stop();
       timeoutId = undefined;
-    }, timeout);
+    }, opts.timeout);
   };
 };
 ```
