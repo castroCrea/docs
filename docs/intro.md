@@ -11,14 +11,14 @@ slug: /
 <Tabs>
 <TabItem value="browser" label="Browser">
 
-```npm2yarn
+```bash
 npm install @palette.dev/browser
 ```
 
 </TabItem>
 <TabItem value="electron" label="Electron">
 
-```npm2yarn
+```bash
 npm install @palette.dev/electron
 ```
 
@@ -111,7 +111,7 @@ init();
 ## 2. Upload Source Maps {#assets}
 
 :::info
-This step is required if you are using a framework or a bundler (like next.js, svelte, webpack, esbuild, and parcel).
+This step is required if you are using a framework or a bundler (like next.js, webpack, vite, and parcel).
 :::
 
 #### Prerequisite
@@ -124,7 +124,7 @@ This step is required if you are using a framework or a bundler (like next.js, s
 
 #### Installation
 
-```npm2yarn
+```bash
 npm install @palette.dev/webpack-plugin --save-dev
 ```
 
@@ -159,7 +159,7 @@ module.exports = {
 #### Installation
 
 ```bash
-pm install @palette.dev/webpack-plugin --save-dev
+npm install @palette.dev/webpack-plugin --save-dev
 ```
 
 #### Usage
@@ -185,7 +185,7 @@ module.exports = {
 
 #### Installation
 
-```npm2yarn
+```bash
 npm install @palette.dev/webpack-plugin --save-dev
 ```
 
@@ -210,7 +210,7 @@ module.exports = {
 
 #### Installation
 
-```npm2yarn
+```bash
 npm install @palette.dev/plugin-vite --save-dev
 ```
 
@@ -264,7 +264,7 @@ init({
 
 #### Installation
 
-```npm2yarn
+```bash
 npm install @palette.dev/cli --save-dev
 ```
 
@@ -472,6 +472,8 @@ window.addEventListener("keypress", debounceProfiler);
 
 :::warning
 Palette only emits metrics in production. You'll need to build your app to see metrics in your dashboard.
+
+Source Maps are only uploaded in CI. If you don't have a CI, set the `CI` env variable to `true` to upload source maps (eg. `CI=true npm run build`).
 :::
 
 </TabItem>
