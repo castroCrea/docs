@@ -91,9 +91,13 @@ init({
 });
 ```
 
-#### Preload Script (optional)
+#### Preload Script
 
-If you have a preload script you need to call `init` from `@palette.dev/electron/preload`. Skip this if you don't have a preload script.
+Skip this step if you have [`nodeIntegration`](https://www.electronjs.org/docs/latest/api/browser-window#new-browserwindowoptions) enabled.
+
+If `nodeIntegration` is disabled and you don't have a preload script, you'll need to [create one](https://www.electronjs.org/docs/latest/tutorial/tutorial-preload).
+
+Call `init` from `@palette.dev/electron/preload` in your preload script:
 
 ```ts title="preload.js"
 import { init } from "@palette.dev/electron/preload";
@@ -425,7 +429,7 @@ import { profiler, label } from "@palette.dev/browser";
 
 // Profile page load
 profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
-addEventListener("load", () => profiler.stop());
+window.addEventListener("load", () => profiler.stop());
 
 // A utility for profiling and label frequent events
 const debounce = (start, stop, opts = { timeout: 1_000 }) => {
@@ -460,10 +464,10 @@ const debounceProfiler = debounce(
 );
 
 // Profile scroll, mousemove, and click events
-addEventListener("wheel", debounceProfiler);
-addEventListener("mousemove", debounceProfiler);
-addEventListener("click", debounceProfiler);
-addEventListener("keypress", debounceProfiler);
+window.addEventListener("wheel", debounceProfiler);
+window.addEventListener("mousemove", debounceProfiler);
+window.addEventListener("click", debounceProfiler);
+window.addEventListener("keypress", debounceProfiler);
 ```
 
 :::warning
@@ -481,7 +485,7 @@ import { profiler, label } from "@palette.dev/electron/renderer";
 
 // Profile page load
 profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
-addEventListener("load", () => profiler.stop());
+window.addEventListener("load", () => profiler.stop());
 
 // A utility for profiling and label frequent events
 const debounce = (start, stop, opts = { timeout: 1_000 }) => {
@@ -514,10 +518,10 @@ const debounceProfiler = debounce(
   }
 );
 // Profile scroll, mousemove, and click events
-addEventListener("wheel", debounceProfiler);
-addEventListener("mousemove", debounceProfiler);
-addEventListener("click", debounceProfiler);
-addEventListener("keypress", debounceProfiler);
+window.addEventListener("wheel", debounceProfiler);
+window.addEventListener("mousemove", debounceProfiler);
+window.addEventListener("click", debounceProfiler);
+window.addEventListener("keypress", debounceProfiler);
 ```
 
 :::warning
