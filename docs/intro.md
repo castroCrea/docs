@@ -124,7 +124,7 @@ This step is required if you are using a framework or a bundler (like next.js, s
 
 #### Installation
 
-```bash
+```npm2yarn
 npm install @palette.dev/webpack-plugin --save-dev
 ```
 
@@ -159,7 +159,7 @@ module.exports = {
 #### Installation
 
 ```bash
-npm install @palette.dev/webpack-plugin --save-dev
+pm install @palette.dev/webpack-plugin --save-dev
 ```
 
 #### Usage
@@ -185,7 +185,7 @@ module.exports = {
 
 #### Installation
 
-```bash
+```npm2yarn
 npm install @palette.dev/webpack-plugin --save-dev
 ```
 
@@ -210,7 +210,7 @@ module.exports = {
 
 #### Installation
 
-```bash
+```npm2yarn
 npm install @palette.dev/plugin-vite --save-dev
 ```
 
@@ -264,7 +264,7 @@ init({
 
 #### Installation
 
-```bash
+```npm2yarn
 npm install @palette.dev/cli --save-dev
 ```
 
