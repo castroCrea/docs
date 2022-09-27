@@ -4,8 +4,12 @@
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
-const constants = require("./constants");
-const { GITHUB_URL, TWITTER_URL, GOOGLE_ANALYTICS_ID } = constants;
+const {
+  GITHUB_URL,
+  TWITTER_URL,
+  GOOGLE_ANALYTICS_ID,
+  TAGLINE,
+} = require("./constants");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -25,9 +29,9 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          breadcrumbs: false,
           sidebarPath: require.resolve("./sidebars.js"),
           routeBasePath: "/",
-          // Please change this to your repo.
           editUrl: `${GITHUB_URL}/tree/main/`,
           remarkPlugins: [
             [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
@@ -54,6 +58,8 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      image: "img/icons/icon.png",
+      metadata: [{ name: "twitter:card", content: TAGLINE }],
       docs: {
         sidebar: {
           autoCollapseCategories: true,
@@ -67,6 +73,7 @@ const config = {
         // respectPrefersColorScheme: true,
       },
       navbar: {
+        hideOnScroll: true,
         title: "Palette",
         logo: {
           alt: "Palette Logo",
