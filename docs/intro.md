@@ -6,7 +6,7 @@ slug: /
 
 ## 1. Setup Client {#client}
 
-#### Installation
+#### Install
 
 <Tabs>
 <TabItem value="browser" label="Browser">
@@ -40,6 +40,7 @@ import TabItem from '@theme/TabItem';
 <TabItem value="browser" label="Browser">
 
 ```ts title="index.js"
+// Import palette before all other imports
 import {
   init,
   events,
@@ -54,6 +55,8 @@ init({
   // Collect click, web vitals, network, performance events, and profiles
   plugins: [events(), vitals(), network(), measure(), profiler()],
 });
+
+// Your other imports...
 ```
 
 </TabItem>
@@ -63,6 +66,7 @@ init({
 #### Main Process
 
 ```ts title="main.js"
+// Import palette before all other imports
 import { init, events, measure, profiler } from "@palette.dev/electron/main";
 
 init({
@@ -70,11 +74,14 @@ init({
   // Collect click, performance events, and profiles
   plugins: [events(), measure(), profiler()],
 });
+
+// Your other imports...
 ```
 
 #### Renderer Process
 
 ```ts title="renderer.js"
+// Import palette before all other imports
 import {
   init,
   events,
@@ -89,6 +96,8 @@ init({
   // Collect click, web vitals, network, performance events, and profiles
   plugins: [events(), vitals(), network(), measure(), profiler()],
 });
+
+// Your other imports...
 ```
 
 #### Preload Script
@@ -114,15 +123,55 @@ init();
 This step is required if you are using a framework or a bundler (like next.js, webpack, vite, and parcel).
 :::
 
-#### Prerequisite
+### Prerequisite
 
 1. Get your **asset key** at `https://palette.dev/[your-username]/[your-project]/settings`.
-2. In your CI, set an env variable named `PALETTE_ASSET_KEY` to your **asset key**
+2. In your CI, set an env variable named `PALETTE_ASSET_KEY` to your **asset key**. This is necessary since source maps are only uploaded in CI.
+
+:::tip
+
+Set the `PALETTE_ASSET_KEY` env variable from the CLI.
+
+<Tabs>
+<TabItem value="vercel" label="Vercel">
+
+```bash
+npx vercel env add
+```
+
+See the [Vercel CLI docs](https://vercel.com/docs/cli/env#usage) for more info.
+
+</TabItem>
+
+<TabItem value="netlify" label="Netlify">
+
+```bash
+npx netlify env:set PALETTE_ASSET_KEY "YOUR_ASSET_KEY"
+```
+
+See the [Netlify CLI docs](https://www.netlify.com/blog/2021/12/10/more-tips-for-environment-variables-and-netlify-cli/) for more info.
+
+</TabItem>
+
+<TabItem value="github" label="GitHub">
+
+```bash
+gh secret add PALETTE_ASSET_KEY
+```
+
+See the [GitHub CLI docs](https://cli.github.com/manual/gh_secret_set) for more info.
+
+</TabItem>
+</Tabs>
+
+:::
+
+### Configure Your Bundler
 
 <Tabs>
 <TabItem value="next" label="Next.js">
 
-#### Installation
+#### Install
 
 ```bash
 npm install @palette.dev/webpack-plugin --save-dev
@@ -156,7 +205,7 @@ module.exports = {
 
 <TabItem value="cra" label="Create React App (ejected)">
 
-#### Installation
+#### Install
 
 ```bash
 npm install @palette.dev/webpack-plugin --save-dev
@@ -183,7 +232,7 @@ module.exports = {
 
 <TabItem value="webpack" label="Webpack">
 
-#### Installation
+#### Install
 
 ```bash
 npm install @palette.dev/webpack-plugin --save-dev
@@ -208,7 +257,7 @@ module.exports = {
 
 <TabItem value="vite" label="Vite">
 
-#### Installation
+#### Install
 
 ```bash
 npm install @palette.dev/plugin-vite --save-dev
@@ -234,6 +283,7 @@ export default defineConfig({
   build: {
     // Output source maps
     sourcemap: true,
+    // Set source maps paths relative to the current working directory
     rollupOptions: {
       output: {
         sourcemapPathTransform: (relativeSourcePath, sourcemapPath) =>
@@ -260,9 +310,9 @@ init({
 
 </TabItem>
 
-<TabItem value="cli" label="CLI">
+<TabItem value="other" label="Other">
 
-#### Installation
+#### Install
 
 ```bash
 npm install @palette.dev/cli --save-dev
@@ -472,8 +522,6 @@ window.addEventListener("keypress", debounceProfiler);
 
 :::warning
 Palette only emits metrics in production. You'll need to build your app to see metrics in your dashboard.
-
-Source Maps are only uploaded in CI. If you don't have a CI, set the `CI` env variable to `true` to upload source maps (eg. `CI=true npm run build`).
 :::
 
 </TabItem>
@@ -505,6 +553,7 @@ const debounce = (start, stop, opts = { timeout: 1_000 }) => {
     }, opts.timeout);
   };
 };
+
 // Debounce starting the profiler
 const debounceProfiler = debounce(
   () => {
@@ -519,6 +568,7 @@ const debounceProfiler = debounce(
     return profiler.stop();
   }
 );
+
 // Profile scroll, mousemove, and click events
 window.addEventListener("wheel", debounceProfiler);
 window.addEventListener("mousemove", debounceProfiler);
