@@ -190,9 +190,6 @@ module.exports = {
         new PalettePlugin({
           key: process.env.PALETTE_ASSET_KEY,
           include: [".next/static"],
-          include: {
-            ext: "js",
-          },
         })
       );
     }
