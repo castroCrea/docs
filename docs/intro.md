@@ -156,7 +156,7 @@ See the [Netlify CLI docs](https://www.netlify.com/blog/2021/12/10/more-tips-for
 <TabItem value="github" label="GitHub">
 
 ```bash
-gh secret add PALETTE_ASSET_KEY
+gh secret set PALETTE_ASSET_KEY
 ```
 
 See the [GitHub CLI docs](https://cli.github.com/manual/gh_secret_set) for more info.
