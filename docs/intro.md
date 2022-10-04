@@ -153,7 +153,7 @@ See the [Netlify CLI docs](https://www.netlify.com/blog/2021/12/10/more-tips-for
 
 </TabItem>
 
-<TabItem value="github" label="GitHub">
+<TabItem value="github" label="GitHub Workflows">
 
 ```bash
 gh secret set PALETTE_ASSET_KEY
