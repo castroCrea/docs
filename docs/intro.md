@@ -482,10 +482,10 @@ window.addEventListener("load", () => profiler.stop());
 const debounce = (start, stop, opts = { timeout: 1_000 }) => {
   let timeoutId;
   return () => {
-    if (timeoutId === undefined || timeoutId === null) {
-      start();
-    } else {
+    if (typeof timeoutId === "number") {
       clearTimeout(timeoutId);
+    } else {
+      start();
     }
     // Debounce marking the end of the label
     timeoutId = setTimeout(() => {
@@ -538,10 +538,10 @@ window.addEventListener("load", () => profiler.stop());
 const debounce = (start, stop, opts = { timeout: 1_000 }) => {
   let timeoutId;
   return () => {
-    if (timeoutId === undefined || timeoutId === null) {
-      start();
-    } else {
+    if (typeof timeoutId === "number") {
       clearTimeout(timeoutId);
+    } else {
+      start();
     }
     // Debounce marking the end of the label
     timeoutId = setTimeout(() => {
