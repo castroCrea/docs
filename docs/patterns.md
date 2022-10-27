@@ -52,8 +52,8 @@ This pattern works well for user interactions like typing, dragging, and clickin
 
 ```ts
 // A utility for profiling and label frequent events
+let timeoutId;
 const debounce = (start, stop, opts = { timeout: 1_000 }) => {
-  let timeoutId;
   return () => {
     if (timeoutId == undefined) {
       start();

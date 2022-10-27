@@ -479,8 +479,8 @@ profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
 window.addEventListener("load", () => profiler.stop());
 
 // A utility for profiling and label frequent events
+let timeoutId;
 const debounce = (start, stop, opts = { timeout: 1_000 }) => {
-  let timeoutId;
   return () => {
     if (typeof timeoutId === "number") {
       clearTimeout(timeoutId);
@@ -535,8 +535,8 @@ profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
 window.addEventListener("load", () => profiler.stop());
 
 // A utility for profiling and label frequent events
+let timeoutId;
 const debounce = (start, stop, opts = { timeout: 1_000 }) => {
-  let timeoutId;
   return () => {
     if (typeof timeoutId === "number") {
       clearTimeout(timeoutId);
