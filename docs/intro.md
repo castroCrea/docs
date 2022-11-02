@@ -185,14 +185,12 @@ const PalettePlugin = require("@palette.dev/webpack-plugin");
 module.exports = {
   // ...
   webpack(config) {
-    if (config.mode === "production") {
-      config.plugins.push(
-        new PalettePlugin({
-          key: process.env.PALETTE_ASSET_KEY,
-          include: [".next/static"],
-        })
-      );
-    }
+    config.plugins.push(
+      new PalettePlugin({
+        key: process.env.PALETTE_ASSET_KEY,
+        include: [".next/static"],
+      })
+    );
     return config;
   },
 };
