@@ -465,7 +465,83 @@ init({
 ## 4. Start the Profiler {#profiler}
 
 <Tabs>
-<TabItem value="browser" label="Browser">
+
+<TabItem value="react" label="React">
+
+Include this at the **top-level** of your app's entrypoint:
+
+```ts title="App.jsx"
+import { useRef, useEffect } from "react";
+import { profiler, label } from "@palette.dev/browser";
+
+// Profile page load
+//   * Sample every 10ms
+//   * Start the profiler immediately
+//   * Measure page load
+if (typeof window !== "undefined") {
+  profiler.start({ sampleInterval: 10, maxBufferSize: 100_000 });
+  addEventListener("load", () => {
+    performance.measure("load");
+    profiler.stop();
+  });
+}
+
+// A utility for debouncing frequent events, making them easier to profile
+let timeoutId;
+const debounce = (start, stop) => {
+  return () => {
+    if (typeof timeoutId === "number") {
+      clearTimeout(timeoutId);
+    } else {
+      start();
+    }
+    timeoutId = setTimeout(() => {
+      stop();
+      timeoutId = undefined;
+    }, 1_000);
+  };
+};
+
+const App = () => {
+  const debounceProfiler = useRef(
+    debounce(
+      () => {
+        profiler.start({ sampleInterval: 10, maxBufferSize: 100_000 });
+      },
+      () => {
+        profiler.stop();
+      }
+    )
+  );
+
+  // Profile page interactions
+  //   * Collect samples every 10ms
+  //   * Start the profiler on click, keypress, pointermove, and wheel events
+  //   * Stop the profiler after 1s of inactivity
+  useEffect(() => {
+    addEventListener("click", debounceProfiler.current);
+    addEventListener("keypress", debounceProfiler.current);
+    addEventListener("pointermove", debounceProfiler.current);
+    addEventListener("wheel", debounceProfiler.current);
+
+    return () => {
+      removeEventListener("click", debounceProfiler.current);
+      removeEventListener("keypress", debounceProfiler.current);
+      removeEventListener("pointermove", debounceProfiler.current);
+      removeEventListener("wheel", debounceProfiler.current);
+    };
+  }, []);
+
+  // ...
+};
+```
+
+:::warning
+Palette only emits metrics in production. You'll need to build your app to see metrics in your dashboard.
+:::
+
+</TabItem>
+<TabItem value="browser" label="Vanilla JS">
 
 Include this at the **top-level** of your app's entrypoint:
 
@@ -473,46 +549,52 @@ Include this at the **top-level** of your app's entrypoint:
 import { profiler, label } from "@palette.dev/browser";
 
 // Profile page load
-profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
-window.addEventListener("load", () => profiler.stop());
+//   * Sample every 10ms
+//   * Start the profiler immediately
+//   * Measure page load
+profiler.start({ sampleInterval: 10, maxBufferSize: 100_000 });
+addEventListener("load", () => {
+  performance.measure("load");
+  profiler.stop();
+});
 
-// A utility for profiling and label frequent events
+// A utility for debouncing frequent events, making them easier to profile
 let timeoutId;
-const debounce = (start, stop, opts = { timeout: 1_000 }) => {
+const debounce = (start, stop) => {
   return () => {
     if (typeof timeoutId === "number") {
       clearTimeout(timeoutId);
     } else {
       start();
     }
-    // Debounce marking the end of the label
     timeoutId = setTimeout(() => {
       stop();
       timeoutId = undefined;
-    }, opts.timeout);
+    }, 1_000);
   };
 };
 
 // Debounce starting the profiler
 const debounceProfiler = debounce(
   () => {
-    label.start("ui.interaction");
     profiler.start({
       sampleInterval: 10,
       maxBufferSize: 10_000,
     });
   },
   () => {
-    label.end("ui.interaction");
     return profiler.stop();
   }
 );
 
-// Profile scroll, mousemove, and click events
-window.addEventListener("wheel", debounceProfiler);
-window.addEventListener("mousemove", debounceProfiler);
-window.addEventListener("click", debounceProfiler);
-window.addEventListener("keypress", debounceProfiler);
+// Profile page interactions
+//   * Collect samples every 10ms
+//   * Start the profiler on ui interactions
+//   * Stop the profiler after 1s of inactivity
+addEventListener("wheel", debounceProfiler);
+addEventListener("mousemove", debounceProfiler);
+addEventListener("click", debounceProfiler);
+addEventListener("keypress", debounceProfiler);
 ```
 
 :::warning
@@ -530,9 +612,9 @@ import { profiler, label } from "@palette.dev/electron/renderer";
 
 // Profile page load
 profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
-window.addEventListener("load", () => profiler.stop());
+addEventListener("load", () => profiler.stop());
 
-// A utility for profiling and label frequent events
+// A utility for profiling and labeling frequent events
 let timeoutId;
 const debounce = (start, stop, opts = { timeout: 1_000 }) => {
   return () => {
@@ -552,23 +634,21 @@ const debounce = (start, stop, opts = { timeout: 1_000 }) => {
 // Debounce starting the profiler
 const debounceProfiler = debounce(
   () => {
-    label.start("ui.interaction");
     profiler.start({
       sampleInterval: 10,
       maxBufferSize: 10_000,
     });
   },
   () => {
-    label.end("ui.interaction");
     return profiler.stop();
   }
 );
 
 // Profile scroll, mousemove, and click events
-window.addEventListener("wheel", debounceProfiler);
-window.addEventListener("mousemove", debounceProfiler);
-window.addEventListener("click", debounceProfiler);
-window.addEventListener("keypress", debounceProfiler);
+addEventListener("wheel", debounceProfiler);
+addEventListener("mousemove", debounceProfiler);
+addEventListener("click", debounceProfiler);
+addEventListener("keypress", debounceProfiler);
 ```
 
 :::warning
