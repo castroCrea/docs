@@ -466,7 +466,7 @@ init({
 
 <Tabs>
 
-<TabItem value="react" label="React">
+<TabItem value="browser-react" label="Browser (React)">
 
 Include this at the **top-level** of your app's entrypoint:
 
@@ -541,7 +541,7 @@ Palette only emits metrics in production. You'll need to build your app to see m
 :::
 
 </TabItem>
-<TabItem value="browser" label="Vanilla JS">
+<TabItem value="browser-vanilla" label="Browser (Vanilla JS)">
 
 Include this at the **top-level** of your app's entrypoint:
 
