@@ -16,10 +16,10 @@ init({
 ## Electron Renderer
 
 ```ts
-import { init, cpu, events, vitals } from "@palette.dev/electron/renderer";
+import { init, cpu, events } from "@palette.dev/electron/renderer";
 
 init({
   key: "YOUR_CLIENT_KEY",
-  plugins: [cpu(), events(), vitals()],
+  plugins: [cpu(), events()],
 });
 ```

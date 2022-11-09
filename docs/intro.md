@@ -41,19 +41,12 @@ import TabItem from '@theme/TabItem';
 
 ```ts title="index.js"
 // Import palette before all other imports
-import {
-  init,
-  events,
-  vitals,
-  measure,
-  network,
-  profiler,
-} from "@palette.dev/browser";
+import { init, events, measure, network, profiler } from "@palette.dev/browser";
 
 init({
   key: "YOUR_CLIENT_KEY",
-  // Collect click, web vitals, network, performance events, and profiles
-  plugins: [events(), vitals(), network(), measure(), profiler()],
+  // Collect click, network, performance events, and profiles
+  plugins: [events(), network(), measure(), profiler()],
 });
 
 // Your other imports...
@@ -85,7 +78,6 @@ init({
 import {
   init,
   events,
-  vitals,
   measure,
   network,
   profiler,
@@ -93,8 +85,8 @@ import {
 
 init({
   key: "YOUR_CLIENT_KEY",
-  // Collect click, web vitals, network, performance events, and profiles
-  plugins: [events(), vitals(), network(), measure(), profiler()],
+  // Collect click, network, performance events, and profiles
+  plugins: [events(), network(), measure(), profiler()],
 });
 
 // Your other imports...
