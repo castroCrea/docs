@@ -464,7 +464,7 @@ Include this at the **top-level** of your app's entrypoint:
 
 ```ts title="App.jsx"
 import { useRef, useEffect } from "react";
-import { profiler, label } from "@palette.dev/browser";
+import { profiler } from "@palette.dev/browser";
 
 // Profile page load
 //   * Sample every 10ms
@@ -538,7 +538,7 @@ Palette only emits metrics in production. You'll need to build your app to see m
 Include this at the **top-level** of your app's entrypoint:
 
 ```ts title="index.js"
-import { profiler, label } from "@palette.dev/browser";
+import { profiler } from "@palette.dev/browser";
 
 // Profile page load
 //   * Sample every 10ms
@@ -600,7 +600,7 @@ Palette only emits metrics in production. You'll need to build your app to see m
 Include this at the **top-level** of your app's **renderer process**:
 
 ```ts title="renderer.js"
-import { profiler, label } from "@palette.dev/electron/renderer";
+import { profiler } from "@palette.dev/electron/renderer";
 
 // Profile page load
 profiler.start({ sampleInterval: 10, maxBufferSize: 10_000 });
